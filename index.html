@@ -12,8 +12,6 @@
       --txt:#fff;
       --muted:rgba(255,255,255,.74);
       --line:rgba(255,255,255,.10);
-      --glass:rgba(8,8,12,.28);
-      --glass2:rgba(0,0,0,.48);
       --rose:#f7bfd8;
       --gold:#f1d28d;
       --shadow:0 30px 100px rgba(0,0,0,.5);
@@ -23,7 +21,10 @@
 
     *{box-sizing:border-box}
     html,body{
-      margin:0;height:100%;overflow:hidden;color:var(--txt);
+      margin:0;
+      height:100%;
+      overflow:hidden;
+      color:var(--txt);
       font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
       background:
         radial-gradient(900px 420px at 0% 0%, rgba(247,191,216,.08), transparent 60%),
@@ -31,36 +32,97 @@
         linear-gradient(180deg, var(--bg), var(--bg2));
     }
 
-    .app{position:relative;width:100vw;height:100vh;overflow:hidden}
-    .progress{position:absolute;top:0;left:0;width:100%;height:4px;background:rgba(255,255,255,.08);z-index:30}
-    .bar{width:0%;height:100%;background:linear-gradient(90deg,var(--rose),var(--gold));box-shadow:0 0 18px rgba(241,210,141,.35)}
+    .app{
+      position:relative;
+      width:100vw;
+      height:100vh;
+      overflow:hidden;
+    }
+
+    .app::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:radial-gradient(circle at 50% 30%, rgba(255,255,255,0.08), transparent 60%);
+      pointer-events:none;
+      animation:pulse 6s infinite ease-in-out;
+    }
+
+    .progress{
+      position:absolute;
+      top:0;
+      left:0;
+      width:100%;
+      height:4px;
+      background:rgba(255,255,255,.08);
+      z-index:30;
+    }
+
+    .bar{
+      width:0%;
+      height:100%;
+      background:linear-gradient(90deg,var(--rose),var(--gold));
+      box-shadow:0 0 18px rgba(241,210,141,.35);
+    }
 
     .topbar{
-      position:absolute;top:16px;left:50%;transform:translateX(-50%);z-index:20;
-      display:flex;gap:12px;flex-wrap:wrap;justify-content:center;max-width:calc(100vw - 32px)
+      position:absolute;
+      top:16px;
+      left:50%;
+      transform:translateX(-50%);
+      z-index:20;
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:center;
+      max-width:calc(100vw - 32px);
     }
+
     .pill{
-      padding:12px 18px;border-radius:999px;border:1px solid var(--line);
-      background:rgba(0,0,0,.26);backdrop-filter:blur(10px);box-shadow:0 10px 30px rgba(0,0,0,.18)
+      padding:12px 18px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(0,0,0,.26);
+      backdrop-filter:blur(10px);
+      box-shadow:0 10px 30px rgba(0,0,0,.18);
     }
+
     .brand{font-weight:800}
     .sub{color:var(--muted);font-size:14px}
 
     .slide{
-      position:absolute;inset:0;opacity:0;pointer-events:none;
+      position:absolute;
+      inset:0;
+      opacity:0;
+      pointer-events:none;
       transform:scale(1.03) rotate(.001deg);
       transition:opacity 1.4s ease, transform var(--dur) ease;
     }
-    .slide.active{opacity:1;pointer-events:auto;transform:scale(1)}
+
+    .slide.active{
+      opacity:1;
+      pointer-events:auto;
+      transform:scale(1);
+    }
 
     .backdrop{
-      position:absolute;inset:-4%;
-      background-position:center;background-size:cover;
+      position:absolute;
+      inset:-4%;
+      background-position:center;
+      background-size:cover;
       filter:blur(30px) brightness(.30) saturate(1.08);
       transform:scale(1.08);
     }
 
-    .stage{position:absolute;inset:0;display:grid;place-items:center;padding:28px;z-index:2}
+    .stage{
+      position:absolute;
+      inset:0;
+      display:grid;
+      place-items:center;
+      padding:28px;
+      z-index:2;
+    }
+
     .frame{
       position:relative;
       width:min(94vw, 1550px);
@@ -72,35 +134,73 @@
       box-shadow:var(--shadow);
     }
 
-    .layout{position:absolute;inset:0;display:grid;grid-template-columns: 1.2fr .8fr}
-    .layout.portrait{grid-template-columns: .95fr 1.05fr}
-    .layout.full{grid-template-columns: 1fr}
+    .layout{
+      position:absolute;
+      inset:0;
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+    }
 
-    .media-pane,.text-pane{position:relative}
+    .layout.portrait{
+      grid-template-columns:.95fr 1.05fr;
+    }
+
+    .layout.full{
+      grid-template-columns:1fr;
+    }
+
+    .media-pane,.text-pane{
+      position:relative;
+    }
+
     .media-pane{
-      display:grid;place-items:center;overflow:hidden;
+      display:grid;
+      place-items:center;
+      overflow:hidden;
       background:
         radial-gradient(circle at top left, rgba(255,255,255,.04), transparent 30%),
         linear-gradient(145deg, rgba(255,255,255,.02), rgba(255,255,255,.01));
     }
+
     .media-pane img{
-      max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain;
+      max-width:100%;
+      max-height:100%;
+      width:auto;
+      height:auto;
+      object-fit:contain;
       animation:ken var(--dur) ease forwards;
       filter:saturate(1.03) contrast(1.03);
     }
-    .layout.full .media-pane img{width:100%;height:100%;object-fit:contain}
+
+    .layout.full .media-pane img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+    }
 
     .text-pane{
-      display:flex;align-items:flex-end;justify-content:center;
+      display:flex;
+      align-items:flex-end;
+      justify-content:center;
       padding:34px;
       background:
         linear-gradient(180deg, rgba(0,0,0,.08), rgba(0,0,0,.35) 40%, rgba(0,0,0,.58) 100%),
         linear-gradient(145deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
       border-left:1px solid rgba(255,255,255,.06);
     }
-    .layout.portrait .text-pane{border-left:0;border-right:1px solid rgba(255,255,255,.06);order:-1}
+
+    .layout.portrait .text-pane{
+      border-left:0;
+      border-right:1px solid rgba(255,255,255,.06);
+      order:-1;
+    }
+
     .layout.full .text-pane{
-      position:absolute;left:0;right:0;bottom:0;top:auto;
+      position:absolute;
+      left:0;
+      right:0;
+      bottom:0;
+      top:auto;
       min-height:34%;
       align-items:flex-end;
       border-left:0;
@@ -118,126 +218,294 @@
       box-shadow:0 18px 50px rgba(0,0,0,.28);
       animation:rise .95s cubic-bezier(.2,.85,.22,1) both;
     }
+
     .eyebrow{
-      display:inline-flex;gap:8px;align-items:center;
-      font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:12px
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      font-size:12px;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      color:var(--gold);
+      margin-bottom:12px;
     }
+
     .text-card h2{
       margin:0;
-      font-size:clamp(1.35rem,2.6vw,2.7rem);
-      line-height:1.16;
+      font-size:clamp(1.2rem,2.4vw,2.5rem);
+      line-height:1.2;
       font-weight:800;
       text-wrap:balance;
       letter-spacing:.01em;
     }
+
     .meta{
-      margin-top:14px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
-      color:var(--muted);font-size:14px;
+      margin-top:14px;
+      display:flex;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
+      color:var(--muted);
+      font-size:14px;
     }
+
     .scrim{
-      position:absolute;inset:0;
+      position:absolute;
+      inset:0;
       background:
         radial-gradient(circle at center, transparent 40%, rgba(0,0,0,.12) 100%),
         linear-gradient(180deg, rgba(255,255,255,.02), transparent 20%, rgba(0,0,0,.12) 100%);
       pointer-events:none;
     }
+
     .ribbon{
-      position:absolute;top:18px;right:18px;z-index:8;
-      padding:10px 14px;border-radius:999px;
-      background:rgba(0,0,0,.26);border:1px solid rgba(255,255,255,.08);
+      position:absolute;
+      top:18px;
+      right:18px;
+      z-index:8;
+      padding:10px 14px;
+      border-radius:999px;
+      background:rgba(0,0,0,.26);
+      border:1px solid rgba(255,255,255,.08);
       backdrop-filter:blur(10px);
-      color:var(--muted);font-size:13px;
+      color:var(--muted);
+      font-size:13px;
     }
 
     .controls{
-      position:absolute;bottom:14px;left:50%;transform:translateX(-50%);z-index:25;
-      display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;
+      position:absolute;
+      bottom:14px;
+      left:50%;
+      transform:translateX(-50%);
+      z-index:25;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:center;
       max-width:calc(100vw - 24px);
-      padding:10px 14px;border-radius:999px;
-      background:rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(10px);
+      padding:10px 14px;
+      border-radius:999px;
+      background:rgba(0,0,0,.28);
+      border:1px solid rgba(255,255,255,.08);
+      backdrop-filter:blur(10px);
     }
-    .btn{
-      appearance:none;border:0;cursor:pointer;min-width:44px;height:44px;border-radius:999px;
-      background:rgba(255,255,255,.1);color:#fff;font-size:17px;transition:.2s ease;
-    }
-    .btn:hover{background:rgba(255,255,255,.18);transform:translateY(-1px)}
-    .counter{min-width:78px;text-align:center;color:var(--muted);font-size:14px}
-    .hint{color:var(--muted);font-size:12px}
 
-    .hearts,.sparkles{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:1}
-    .heart,.spark{
-      position:absolute;bottom:-30px;opacity:0;animation:floatUp linear infinite;
+    .btn{
+      appearance:none;
+      border:0;
+      cursor:pointer;
+      min-width:44px;
+      height:44px;
+      border-radius:999px;
+      background:rgba(255,255,255,.1);
+      color:#fff;
+      font-size:17px;
+      transition:.2s ease;
     }
+
+    .btn:hover{
+      background:rgba(255,255,255,.18);
+      transform:translateY(-1px);
+    }
+
+    .counter{
+      min-width:78px;
+      text-align:center;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .hint{
+      color:var(--muted);
+      font-size:12px;
+    }
+
+    .hearts,.sparkles{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      overflow:hidden;
+      z-index:1;
+    }
+
+    .heart,.spark{
+      position:absolute;
+      bottom:-30px;
+      opacity:0;
+      animation:floatUp linear infinite;
+    }
+
     .heart{color:rgba(255,192,203,.22)}
     .spark{color:rgba(255,255,255,.18)}
 
     .intro,.final-screen,#lockScreen,#secretMessage{
-      position:fixed;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;
-      text-align:center;padding:24px;
+      position:fixed;
+      inset:0;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+      padding:24px;
     }
 
     #lockScreen{
-      z-index:9999;background:linear-gradient(180deg,#000,#130d18);
+      z-index:9999;
+      background:linear-gradient(180deg,#000,#130d18);
       gap:12px;
     }
-    #lockScreen h1{margin:0;font-size:clamp(2rem,4vw,3.2rem);color:var(--rose)}
-    #lockScreen p{margin:0;color:var(--muted)}
-    #lockScreen input{
-      width:min(320px,88vw);padding:14px 16px;border-radius:14px;border:1px solid rgba(255,255,255,.14);
-      background:rgba(255,255,255,.08);color:#fff;font-size:16px;outline:none;
+
+    #lockScreen h1{
+      margin:0;
+      font-size:clamp(2rem,4vw,3.2rem);
+      color:var(--rose);
     }
+
+    #lockScreen p{
+      margin:0;
+      color:var(--muted);
+    }
+
+    #lockScreen input{
+      width:min(320px,88vw);
+      padding:14px 16px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(255,255,255,.08);
+      color:#fff;
+      font-size:16px;
+      outline:none;
+    }
+
     #lockScreen button{
-      padding:12px 20px;border:none;background:linear-gradient(90deg,var(--rose),var(--gold));
-      color:#111;border-radius:999px;font-weight:800;cursor:pointer;
+      padding:12px 20px;
+      border:none;
+      background:linear-gradient(90deg,var(--rose),var(--gold));
+      color:#111;
+      border-radius:999px;
+      font-weight:800;
+      cursor:pointer;
     }
 
     .intro{
-      z-index:999;background:#000;
+      z-index:999;
+      background:#000;
       animation:fadeOut 4.5s ease forwards;
     }
-    .intro h1{margin:0;font-size:clamp(2.3rem,5vw,4.4rem);color:var(--rose)}
-    .intro p{margin:8px 0 0;color:#fff;font-size:clamp(1rem,2vw,1.3rem)}
-    .intro .date{color:var(--gold);letter-spacing:.18em;text-transform:uppercase}
+
+    .intro h1{
+      margin:0;
+      font-size:clamp(2.3rem,5vw,4.4rem);
+      color:var(--rose);
+    }
+
+    .intro p{
+      margin:8px 0 0;
+      color:#fff;
+      font-size:clamp(1rem,2vw,1.3rem);
+    }
+
+    .intro .date{
+      color:var(--gold);
+      letter-spacing:.18em;
+      text-transform:uppercase;
+    }
 
     .final-screen{
-      z-index:998;background:linear-gradient(180deg,rgba(0,0,0,.92),rgba(20,14,25,.96));
-      opacity:0;visibility:hidden;transition:1.5s ease;
+      z-index:998;
+      background:linear-gradient(180deg,rgba(0,0,0,.92),rgba(20,14,25,.96));
+      opacity:0;
+      visibility:hidden;
+      transition:1.5s ease;
     }
-    .final-screen.show{opacity:1;visibility:visible}
-    .final-screen h1{margin:0;font-size:clamp(2rem,4vw,3.5rem);color:var(--rose)}
-    .final-screen h2{margin:12px 0 0;font-size:clamp(1.4rem,3vw,2.4rem)}
-    .final-screen p{margin:10px 0 0;color:var(--gold);letter-spacing:.16em;text-transform:uppercase}
-    .final-screen .small{margin-top:18px;color:var(--muted);max-width:700px}
+
+    .final-screen.show{
+      opacity:1;
+      visibility:visible;
+    }
+
+    .final-screen h1{
+      margin:0;
+      font-size:clamp(2rem,4vw,3.5rem);
+      color:var(--rose);
+    }
+
+    .final-screen h2{
+      margin:12px 0 0;
+      font-size:clamp(1.4rem,3vw,2.4rem);
+    }
+
+    .final-screen p{
+      margin:10px 0 0;
+      color:var(--gold);
+      letter-spacing:.16em;
+      text-transform:uppercase;
+    }
+
+    .final-screen .small{
+      margin-top:18px;
+      color:var(--muted);
+      max-width:700px;
+    }
 
     #secretBtn{
-      position:fixed;right:20px;top:20px;z-index:40;
-      width:48px;height:48px;border-radius:999px;border:1px solid rgba(255,255,255,.1);
-      background:rgba(0,0,0,.24);color:#fff;font-size:22px;cursor:pointer;backdrop-filter:blur(10px);
+      position:fixed;
+      right:20px;
+      top:20px;
+      z-index:40;
+      width:48px;
+      height:48px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.1);
+      background:rgba(0,0,0,.24);
+      color:#fff;
+      font-size:22px;
+      cursor:pointer;
+      backdrop-filter:blur(10px);
     }
+
     #secretMessage{
-      z-index:9998;background:rgba(0,0,0,.94);display:none;color:#fff;
+      z-index:9998;
+      background:rgba(0,0,0,.94);
+      display:none;
+      color:#fff;
     }
+
     #secretMessage .box{
-      max-width:760px;padding:30px;border-radius:24px;border:1px solid rgba(255,255,255,.08);
+      max-width:760px;
+      padding:30px;
+      border-radius:24px;
+      border:1px solid rgba(255,255,255,.08);
       background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
       box-shadow:var(--shadow);
     }
-    #secretMessage h2{margin:0 0 14px;color:var(--rose);font-size:clamp(1.8rem,4vw,3rem)}
-    #secretMessage p{margin:0;color:#fff;font-size:clamp(1.1rem,2.4vw,1.5rem);line-height:1.5}
+
+    #secretMessage h2{
+      margin:0 0 14px;
+      color:var(--rose);
+      font-size:clamp(1.8rem,4vw,3rem);
+    }
+
+    #secretMessage p{
+      margin:0;
+      color:#fff;
+      font-size:clamp(1.1rem,2.4vw,1.5rem);
+      line-height:1.5;
+    }
+
     #closeSecret{
-      margin-top:18px;padding:10px 18px;border:none;border-radius:999px;
-      background:linear-gradient(90deg,var(--rose),var(--gold));color:#111;font-weight:800;cursor:pointer;
+      margin-top:18px;
+      padding:10px 18px;
+      border:none;
+      border-radius:999px;
+      background:linear-gradient(90deg,var(--rose),var(--gold));
+      color:#111;
+      font-weight:800;
+      cursor:pointer;
     }
 
     .audio-upload{display:none}
-
-    .app::after{
-      content:"";
-      position:absolute;inset:0;
-      background:radial-gradient(circle at 50% 30%, rgba(255,255,255,0.08), transparent 60%);
-      pointer-events:none;
-      animation:pulse 6s infinite ease-in-out;
-    }
 
     @keyframes floatUp{
       0%{transform:translateY(0) translateX(0) rotate(0deg);opacity:0}
@@ -245,24 +513,29 @@
       90%{opacity:.16}
       100%{transform:translateY(-112vh) translateX(22px) rotate(16deg);opacity:0}
     }
+
     @keyframes ken{
       from{transform:scale(1) translateY(0)}
       to{transform:scale(1.05) translateY(-.5%)}
     }
+
     @keyframes rise{
       from{opacity:0;transform:translateY(16px)}
       to{opacity:1;transform:translateY(0)}
     }
+
     @keyframes pulse{
       0%{opacity:.2}
       50%{opacity:.5}
       100%{opacity:.2}
     }
+
     @keyframes fadeOut{
       0%{opacity:1}
       80%{opacity:1}
       100%{opacity:0;visibility:hidden}
     }
+
     @keyframes floatHeartClick{
       0%{transform:translateY(0) scale(1);opacity:1}
       100%{transform:translateY(-100px) scale(1.4);opacity:0}
@@ -270,15 +543,32 @@
 
     @media (max-width:900px){
       .stage{padding:0}
-      .frame{width:100vw;height:100vh;border-radius:0;border:0}
-      .layout,.layout.portrait{grid-template-columns:1fr}
+      .frame{
+        width:100vw;
+        height:100vh;
+        border-radius:0;
+        border:0;
+      }
+      .layout,.layout.portrait{
+        grid-template-columns:1fr;
+      }
       .text-pane{
-        position:absolute;left:0;right:0;bottom:0;min-height:36%;border-left:0;border-right:0;
+        position:absolute;
+        left:0;
+        right:0;
+        bottom:0;
+        min-height:36%;
+        border-left:0;
+        border-right:0;
         background:linear-gradient(180deg, rgba(0,0,0,.05), rgba(0,0,0,.2) 24%, rgba(0,0,0,.68) 100%);
         padding:18px;
       }
       .layout.portrait .text-pane{order:0}
-      .text-card{width:100%;border-radius:20px;padding:18px 18px 15px}
+      .text-card{
+        width:100%;
+        border-radius:20px;
+        padding:18px 18px 15px;
+      }
     }
   </style>
 </head>
@@ -338,68 +628,71 @@
     <h1>Bienvenue chez nous</h1>
     <h2>Madje Darling ❤️</h2>
     <p>24 mars</p>
-    <div class="small">un retour attendu, une maison retrouvée, un bonheur revenu.</div>
+    <div class="small">un retour attendu, une maison retrouvée, le bonheur revenu.</div>
   </div>
 
   <script>
     const captions = [
-  "6 ans… ce n’est pas juste du temps. c’est une histoire tissée de souvenirs, de patience et d’amour.",
-  "on a grandi ensemble. on a appris à se comprendre, à se soutenir, à rester là malgré les saisons de la vie.",
-  "il y a eu des rires, des efforts, des silences, des prières… et toujours ce lien entre nous.",
-  "puis une nouvelle étape est arrivée : notre chez-nous. un lieu à habiter, mais surtout un rêve à construire.",
-  "chaque mur, chaque coin, chaque détail attendait déjà quelque chose d’essentiel : ta présence.",
-  "pendant ces deux semaines dehors, la maison paraissait incomplète. comme un cadre sans sa plus belle image.",
-  "le calme était trop grand. les pièces semblaient retenir leur souffle en attendant ton retour.",
-  "j’ai compris qu’un foyer, ce n’est pas seulement des clés, un toit ou des meubles.",
-  "un foyer, c’est une chaleur. une voix. une paix. un cœur qui rassure.",
-  "Madje Darling, tu donnes une âme à cet endroit. tu transformes l’espace en refuge.",
-  "et ton retour du 24 mars change tout. cette date devient un nouveau départ dans notre histoire.",
-  "à partir d’aujourd’hui, la maison redevient vivante. plus douce. plus belle. plus vraie.",
-  "les murs semblent sourire. l’air paraît plus léger. et mon cœur retrouve enfin son calme.",
-  "après 6 ans, mon choix reste le même. et il devient chaque jour plus certain.",
-  "je veux continuer à construire avec toi : des projets, des habitudes, des souvenirs et une paix durable.",
-  "je veux rire avec toi, rêver avec toi, traverser les jours simples et les jours difficiles avec toi.",
-  "parce que l’amour réel ne se dit pas seulement. il se prouve, il se vit, il se construit.",
-  "et malgré le temps, malgré l’absence, malgré tout… mon cœur revient toujours vers toi.",
-  "dans chaque souvenir, il y a une preuve silencieuse de ce que nous sommes devenus ensemble.",
-  "dans chaque regard, je retrouve cette douceur qui me rassure depuis toutes ces années.",
-  "tu as été mon appui dans les jours calmes comme dans les jours plus lourds.",
-  "ton absence m’a rappelé combien ta présence change l’atmosphère autour de moi.",
-  "même le silence n’avait pas la même couleur quand tu n’étais pas là.",
-  "la maison attendait ton rire, ta voix, ta lumière discrète et belle.",
-  "il y a des personnes qu’on aime. et il y a celles qui deviennent une partie de nous.",
-  "tu fais partie de mon équilibre, de ma paix, de ma façon d’aimer la vie.",
-  "avec toi, les choses simples prennent une valeur immense.",
-  "avec toi, même les jours ordinaires deviennent précieux.",
-  "ce que nous avons construit en 6 ans mérite d’être célébré, protégé et poursuivi.",
-  "je ne veux pas seulement partager un toit avec toi. je veux partager une vie.",
-  "je veux continuer à apprendre ton cœur, à respecter tes silences et à chérir ton sourire.",
-  "je veux être là pour les nouvelles étapes, les projets, les défis et les joies à venir.",
-  "chaque photo raconte un instant, mais ensemble elles racontent notre histoire.",
-  "et cette histoire, je la choisis encore. avec reconnaissance. avec tendresse. avec vérité.",
-  "Madje Darling, ton retour est plus qu’un moment. c’est un soulagement, une joie, une bénédiction.",
-  "le 24 mars devient une date douce, une date à garder dans notre mémoire.",
-  "aujourd’hui, ce lieu redevient vraiment chez nous, parce que tu y es.",
-  "aujourd’hui, mon cœur se repose un peu plus, simplement parce que tu es revenue.",
-  "merci pour ces 6 ans. merci pour ta patience. merci pour ton amour.",
-  "bienvenue chez nous, Madje Darling ❤️",
-  "24 mars — le retour attendu, la maison retrouvée, le bonheur revenu."
-];
+      "6 ans… ce n’est pas juste du temps. c’est une histoire tissée de souvenirs, de patience et d’amour.",
+      "on a grandi ensemble. on a appris à se comprendre, à se soutenir, à rester là malgré les saisons de la vie.",
+      "il y a eu des rires, des efforts, des silences, des prières… et toujours ce lien entre nous.",
+      "puis une nouvelle étape est arrivée : notre chez-nous. un lieu à habiter, mais surtout un rêve à construire.",
+      "chaque mur, chaque coin, chaque détail attendait déjà quelque chose d’essentiel : ta présence.",
+      "pendant ces deux semaines dehors, la maison paraissait incomplète. comme un cadre sans sa plus belle image.",
+      "le calme était trop grand. les pièces semblaient retenir leur souffle en attendant ton retour.",
+      "j’ai compris qu’un foyer, ce n’est pas seulement des clés, un toit ou des meubles.",
+      "un foyer, c’est une chaleur. une voix. une paix. un cœur qui rassure.",
+      "Madje Darling, tu donnes une âme à cet endroit. tu transformes l’espace en refuge.",
+      "et ton retour du 24 mars change tout. cette date devient un nouveau départ dans notre histoire.",
+      "à partir d’aujourd’hui, la maison redevient vivante. plus douce. plus belle. plus vraie.",
+      "les murs semblent sourire. l’air paraît plus léger. et mon cœur retrouve enfin son calme.",
+      "après 6 ans, mon choix reste le même. et il devient chaque jour plus certain.",
+      "je veux continuer à construire avec toi : des projets, des habitudes, des souvenirs et une paix durable.",
+      "je veux rire avec toi, rêver avec toi, traverser les jours simples et les jours difficiles avec toi.",
+      "parce que l’amour réel ne se dit pas seulement. il se prouve, il se vit, il se construit.",
+      "et malgré le temps, malgré l’absence, malgré tout… mon cœur revient toujours vers toi.",
+      "dans chaque souvenir, il y a une preuve silencieuse de ce que nous sommes devenus ensemble.",
+      "dans chaque regard, je retrouve cette douceur qui me rassure depuis toutes ces années.",
+      "tu as été mon appui dans les jours calmes comme dans les jours plus lourds.",
+      "ton absence m’a rappelé combien ta présence change l’atmosphère autour de moi.",
+      "même le silence n’avait pas la même couleur quand tu n’étais pas là.",
+      "la maison attendait ton rire, ta voix, ta lumière discrète et belle.",
+      "il y a des personnes qu’on aime. et il y a celles qui deviennent une partie de nous.",
+      "tu fais partie de mon équilibre, de ma paix, de ma façon d’aimer la vie.",
+      "avec toi, les choses simples prennent une valeur immense.",
+      "avec toi, même les jours ordinaires deviennent précieux.",
+      "ce que nous avons construit en 6 ans mérite d’être célébré, protégé et poursuivi.",
+      "je ne veux pas seulement partager un toit avec toi. je veux partager une vie.",
+      "je veux continuer à apprendre ton cœur, à respecter tes silences et à chérir ton sourire.",
+      "je veux être là pour les nouvelles étapes, les projets, les défis et les joies à venir.",
+      "chaque photo raconte un instant, mais ensemble elles racontent notre histoire.",
+      "et cette histoire, je la choisis encore. avec reconnaissance. avec tendresse. avec vérité.",
+      "Madje Darling, ton retour est plus qu’un moment. c’est un soulagement, une joie, une bénédiction.",
+      "bienvenue chez nous, Madje Darling ❤️",
+      "24 mars — le retour attendu, la maison retrouvée, le bonheur revenu."
+    ];
 
-const slides = Array.from({ length: 41 }, (_, i) => {
-  const num = String(i + 1).padStart(2, "0");
-  return {
-    src: `images/${num}.jpg`,
-    caption: captions[i]
-  };
-});
+    const slides = Array.from({ length: 37 }, (_, i) => {
+      const num = String(i + 1).padStart(2, "0");
+      return {
+        src: `images/${num}.jpg`,
+        caption: captions[i]
+      };
+    });
 
     const DURATION = 8400;
     const app = document.getElementById('app');
     const bar = document.getElementById('bar');
     const counter = document.getElementById('counter');
     const audioEl = document.getElementById('audio');
-    let current = 0, playing = true, timer = null, tick = null, startedAt = Date.now(), slideEls = [], finalShown = false;
+
+    let current = 0;
+    let playing = true;
+    let timer = null;
+    let tick = null;
+    let startedAt = Date.now();
+    let slideEls = [];
+    let finalShown = false;
 
     function unlock(){
       const pass = document.getElementById("password").value;
@@ -410,6 +703,7 @@ const slides = Array.from({ length: 41 }, (_, i) => {
         alert("code incorrect ❤️");
       }
     }
+
     window.unlock = unlock;
 
     function startMusicOnFirstClick(){
@@ -419,17 +713,18 @@ const slides = Array.from({ length: 41 }, (_, i) => {
 
     function spawnParticles(containerId, glyphs, count, className){
       const root = document.getElementById(containerId);
-      for (let i=0;i<count;i++){
+      for (let i = 0; i < count; i++){
         const el = document.createElement('div');
         el.className = className;
-        el.textContent = glyphs[Math.floor(Math.random()*glyphs.length)];
-        el.style.left = (Math.random()*100)+'vw';
-        el.style.fontSize = (12 + Math.random()*18)+'px';
-        el.style.animationDuration = (8 + Math.random()*10)+'s';
-        el.style.animationDelay = (Math.random()*8)+'s';
+        el.textContent = glyphs[Math.floor(Math.random() * glyphs.length)];
+        el.style.left = (Math.random() * 100) + 'vw';
+        el.style.fontSize = (12 + Math.random() * 18) + 'px';
+        el.style.animationDuration = (8 + Math.random() * 10) + 's';
+        el.style.animationDelay = (Math.random() * 8) + 's';
         root.appendChild(el);
       }
     }
+
     spawnParticles('hearts', ['❤','♡'], 16, 'heart');
     spawnParticles('sparkles', ['✦','✧','·'], 26, 'spark');
 
@@ -450,7 +745,7 @@ const slides = Array.from({ length: 41 }, (_, i) => {
     }
 
     async function buildSlides(){
-      for (let i=0; i<slides.length; i++){
+      for (let i = 0; i < slides.length; i++){
         const item = slides[i];
         const img = await preload(item.src);
         const mode = getFitLayout(img.width, img.height, i);
@@ -463,7 +758,7 @@ const slides = Array.from({ length: 41 }, (_, i) => {
             <div class="frame">
               <div class="layout ${mode}">
                 <div class="media-pane">
-                  <img src="${item.src}" alt="photo ${i+1}">
+                  <img src="${item.src}" alt="photo ${i + 1}">
                   <div class="scrim"></div>
                 </div>
                 <div class="text-pane">
@@ -472,39 +767,49 @@ const slides = Array.from({ length: 41 }, (_, i) => {
                     <h2>${item.caption}</h2>
                     <div class="meta">
                       <span>bienvenue chez nous ❤️</span>
-                      <span>${String(i+1).padStart(2,'0')} / ${String(slides.length).padStart(2,'0')}</span>
+                      <span>${String(i + 1).padStart(2,'0')} / ${String(slides.length).padStart(2,'0')}</span>
                     </div>
                   </div>
                 </div>
               </div>
               <div class="ribbon">${mode === 'portrait' ? 'portrait élégant' : (mode === 'full' ? 'cinéma plein cadre' : 'story split layout')}</div>
             </div>
-          </div>`;
+          </div>
+        `;
         app.appendChild(section);
         slideEls.push(section);
       }
       show(0);
     }
 
-    function updateCounter(){ counter.textContent = `${current+1} / ${slides.length}`; }
+    function updateCounter(){
+      counter.textContent = `${current + 1} / ${slides.length}`;
+    }
 
     function restartProgress(){
-      clearTimeout(timer); clearInterval(tick);
+      clearTimeout(timer);
+      clearInterval(tick);
       bar.style.width = '0%';
       startedAt = Date.now();
+
       tick = setInterval(() => {
-        const pct = Math.max(0, Math.min(100, ((Date.now()-startedAt)/DURATION)*100));
+        const pct = Math.max(0, Math.min(100, ((Date.now() - startedAt) / DURATION) * 100));
         bar.style.width = pct + '%';
       }, 30);
-      if (playing) timer = setTimeout(() => show(current + 1), DURATION);
+
+      if (playing){
+        timer = setTimeout(() => show(current + 1), DURATION);
+      }
     }
 
     function show(index){
       current = (index + slides.length) % slides.length;
+
       slideEls.forEach((s, i) => {
         if (i === current) s.classList.add('active');
         else s.classList.remove('active');
       });
+
       updateCounter();
       restartProgress();
 
@@ -523,14 +828,20 @@ const slides = Array.from({ length: 41 }, (_, i) => {
       playing = state;
       document.getElementById('play').textContent = playing ? '❚❚' : '▶';
       if (playing) restartProgress();
-      else { clearTimeout(timer); clearInterval(tick); }
+      else {
+        clearTimeout(timer);
+        clearInterval(tick);
+      }
     }
 
     document.getElementById('prev').onclick = () => show(current - 1);
     document.getElementById('next').onclick = () => show(current + 1);
     document.getElementById('play').onclick = () => setPlaying(!playing);
 
-    document.getElementById('uploadBtn').onclick = () => document.getElementById('audioUpload').click();
+    document.getElementById('uploadBtn').onclick = () => {
+      document.getElementById('audioUpload').click();
+    };
+
     document.getElementById('audioUpload').addEventListener('change', e => {
       const file = e.target.files && e.target.files[0];
       if (!file) return;
@@ -552,18 +863,28 @@ const slides = Array.from({ length: 41 }, (_, i) => {
     document.getElementById('secretBtn').onclick = () => {
       document.getElementById('secretMessage').style.display = 'flex';
     };
+
     document.getElementById('closeSecret').onclick = () => {
       document.getElementById('secretMessage').style.display = 'none';
     };
 
     window.addEventListener('keydown', e => {
-      if (e.code === 'Space') { e.preventDefault(); setPlaying(!playing); }
+      if (e.code === 'Space') {
+        e.preventDefault();
+        setPlaying(!playing);
+      }
       if (e.key === 'ArrowRight') show(current + 1);
       if (e.key === 'ArrowLeft') show(current - 1);
     });
 
     document.addEventListener("click", function(e){
-      if (e.target.closest('#lockScreen') || e.target.closest('#secretMessage') || e.target.closest('.controls') || e.target.closest('#secretBtn')) return;
+      if (
+        e.target.closest('#lockScreen') ||
+        e.target.closest('#secretMessage') ||
+        e.target.closest('.controls') ||
+        e.target.closest('#secretBtn')
+      ) return;
+
       let heart = document.createElement("div");
       heart.innerHTML = "❤️";
       heart.style.position = "fixed";
@@ -574,7 +895,8 @@ const slides = Array.from({ length: 41 }, (_, i) => {
       heart.style.zIndex = "9997";
       heart.style.animation = "floatHeartClick 2s ease-out forwards";
       document.body.appendChild(heart);
-      setTimeout(()=>heart.remove(),2000);
+
+      setTimeout(() => heart.remove(), 2000);
     });
 
     buildSlides();
