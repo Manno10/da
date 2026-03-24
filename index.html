@@ -502,7 +502,7 @@ let startedAt=Date.now(), slideEls=[], finalShown=false;
 
 function unlock(){
   const v = document.getElementById('password').value.trim();
-  if(v === '2403'){
+  if(v === 'welcome'){
     const lock = document.getElementById('lock');
     lock.style.opacity = '0';
     setTimeout(()=>{ lock.style.display='none'; }, 1000);
